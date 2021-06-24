@@ -2,7 +2,7 @@ import javax.crypto.*;
 
 public interface Icrypto{
     public final String TRANSFORM="AES/CBC/PKCS5Padding";
-    public final byte [] IV="AseizeCaracteres".getBytes();
+    public final byte [] IV="connaisToitoimem".getBytes();
     public final String ALGO="AES";
     public final int KEYSIZE=128;
     /**
@@ -25,4 +25,6 @@ public interface Icrypto{
      * @return
      */
     public SecretKey getKey(String filePath);
+  
+    public void Chiffrement(String fileToencrypt,String keyfile);
 }

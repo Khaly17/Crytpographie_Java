@@ -1,3 +1,5 @@
+import javax.crypto.Cipher;
+
 import javax.crypto.SecretKey;
 import javax.swing.JPanel;
 
@@ -9,10 +11,10 @@ public class Classmain extends JPanel{
         
 
         crypto.showSaveDg(key);
-
+        //recuperer la cle
         String keyFile = crypto.showOpenKeyFile(key);
         String fileToEncrypt = crypto.showOpenFileToEncrypt();
-        crypto.getCipher(keyFile );
+        crypto.getCipher(keyFile,Cipher.ENCRYPT_MODE);
         crypto.Chiffrement(fileToEncrypt, keyFile);
 
         

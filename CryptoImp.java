@@ -71,34 +71,36 @@ public class CryptoImp implements Icrypto {
         //CHIFFREMENT
 
         //transform: "AES/CBC/PKCS5Padding"
-         
-        public Cipher getCipher(String keyfile){
+         //ENCRYPT_MODE
+         //les differentes etapes pour un cipher?
+        public Cipher getCipher(String keyfile, int mode){
             try {
 
                 c = Cipher.getInstance(TRANSFORM);
                 IvParameterSpec iv = new IvParameterSpec(IV);
-                c.init(Cipher.ENCRYPT_MODE,getKey(keyfile), iv);
+                c.init(mode,getKey(keyfile), iv);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return c;
-        }
-
-        public void Chiffrement(String plaintext,String keyfile){
+        }   
+        
+        @Override
+        public void Chiffrement(String fileToencrypt,String keyfile){
             try {
 
-                FileInputStream fis = new FileInputStream(plaintext);
-                CipherInputStream  cis = new CipherInputStream(fis, getCipher(keyfile));
-                FileOutputStream fos = new FileOutputStream(plaintext+".khd");
-
-                byte[] buffer = new byte[256];
-                int nbBytesLu=0;
-
-                while ((nbBytesLu = cis.read(buffer)) != -1){
-                     fos.write(buffer, 0, nbBytesLu);
+                FileInputStream fis = new FileInputStream(fileToencrypt);
+                CipherInputStream  cis = new CipherInputStream(fis, getCipher(keyfile,Cipher.ENCRYPT_MODE));
+                //methode process
+                FileOutputStream fos = new FileOutputStream(fileToencrypt+".khd");
+                byte[] buffer = new byte[1024];
+                int nombreBytesLu=0;
+                
+                while ((nombreBytesLu = cis.read(buffer)) != -1){
+                     fos.write(buffer, 0, nombreBytesLu);
                }
-               
+               cis.close();
                fis.close();
                fos.close();
 
